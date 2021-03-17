@@ -11,24 +11,35 @@ class Server {
     this.port = process.env.PORT
 
     this.server = http.createServer(this.app)
-    this.io = socketio(this.server, {/** configuraciones */})
+    this.io = socketio(this.server, {/** configuraciones */ })
+    
+    // init sockets
+    this.sockets = new Sockets(this.io)
   }
 
   middlewares() {
     this.app.use(express.static(path.resolve(__dirname, '../public')))
     this.app.use(cors())
+
+    // GET ticket list
+    this.app.get('/last', (req, res) => {
+      res.json({
+        status: 200,
+        last: this.sockets.ticketList.lastNumbers
+      })
+    })
   }
 
-  socketsConfig() {
-    new Sockets(this.io)
-  }
+  // socketsConfig() {
+  //   new Sockets(this.io)
+  // }
 
   execute() {
     // init middlewares
     this.middlewares()
 
-    // init sockets
-    this.socketsConfig()
+    // // init sockets
+    // this.socketsConfig()
 
     // init server
     this.server.listen(this.port, () => {

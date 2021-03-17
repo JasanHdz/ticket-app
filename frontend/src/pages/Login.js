@@ -20,10 +20,10 @@ function Login() {
   const history = useHistory()
   const [user] = useState(getUserStorage())
 
-  const onFinish = ({ agente, escritorio }) => {
-    console.log('Success:', { agente, escritorio })
-    localStorage.setItem('agente', agente)
-    localStorage.setItem('escritorio', escritorio)
+  const onFinish = ({ agent, desk }) => {
+    console.log('Success:', { agent, desk })
+    localStorage.setItem('agente', agent)
+    localStorage.setItem('escritorio', desk)
     history.push('/dashboard')
   }
 
@@ -49,7 +49,7 @@ function Login() {
     >
       <Form.Item
         label="Nombre del agente"
-        name="agente"
+        name="agent"
         rules={[{ required: true, message: 'Por favor ingrese su nombre!' }]}
       >
         <Input />
@@ -57,7 +57,7 @@ function Login() {
 
       <Form.Item
         label="Escritorio"
-        name="escritorio"
+        name="desk"
         rules={[{ required: true, message: 'Por favor ingrese su escritorio!' }]}
       >
         <InputNumber min={1} max={99} />
